@@ -2,9 +2,11 @@
 #include <iostream>
 using namespace std;
 
-Customer::Customer(string n, string p, double b)
-	:name(n), phoneNumber(p), bonuses(b) {
-	cout << "Created a customer: " << name << endl;
+Customer::Customer(string name, string phoneNumber, double bonuses) {
+	this->name = name;
+	this->phoneNumber = phoneNumber;
+	this->bonuses = bonuses;
+	cout << "Created a customer: " << this->name << endl;
 }
 
 Customer::Customer(string n)

@@ -33,6 +33,7 @@ int main()
 	cout << endl;
 
 	cout << "Copy and move constructors" << endl;
+	cout << endl;
 
 	MenuDish originalDish("Dessert", "Tiramisu", 99.99);
 	MenuDish copiedDish = originalDish; 
@@ -49,5 +50,15 @@ int main()
 	copiedDish.display();
 	cout << endl;
 
+	cout << endl;
+	cout << "Const and static" << endl;
+	cout << endl;
+
+	const Customer vipCustomer("Admin", "0980000000", 1000);
+	vipCustomer.display();
+	cout << endl;
+
+	cout << "Total orders created: " << Order::getTotalOtders() << endl;
+	cout << endl;
     return 0;
 }

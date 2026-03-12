@@ -9,4 +9,6 @@ public:
 	Order(int id, int t, double b, bool p);
 	Order();
 	~Order();
+	void payOrder();
+	void display() const;
 };

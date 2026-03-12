@@ -11,5 +11,6 @@ public:
 	MenuDish(string c, string n, double p);
 	MenuDish();
 	~MenuDish();
+	void display() const;
 };
 

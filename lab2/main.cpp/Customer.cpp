@@ -18,3 +18,11 @@ Customer::Customer()
 Customer::~Customer() {
 	cout << "Destroyed a customer: " << name << endl;
 }
+
+void Customer::display() const {
+	cout << "Customer: " << name << ", Phone: " << phoneNumber << ", Loyalty bonuses: " << bonuses << endl;
+}
+
+void Customer::addPoints(double b) {
+	bonuses += b;
+}

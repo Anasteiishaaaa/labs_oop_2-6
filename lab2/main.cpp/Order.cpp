@@ -14,3 +14,12 @@ Order::Order()
 Order::~Order() {
 	cout << "Destroyed an order: " << orderID << endl;
 }
+
+void Order::payOrder() {
+	isPaid = true;
+	cout << "Order " << orderID << " has been paid." << endl;
+}
+
+void Order::display() const {
+	cout << "Order ID: " << orderID << ", Table: " << tableNumber << ", Total Bill: " << totallBill << " UAH, Paid: " << (isPaid ? "Yes" : "No") << endl;
+}

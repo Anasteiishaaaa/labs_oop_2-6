@@ -12,6 +12,8 @@ public:
 	Customer(string n);
 	Customer();
 	~Customer();
+	void display() const;
+	void addPoints(double b);
 };
 
 

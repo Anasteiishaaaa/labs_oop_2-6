@@ -14,3 +14,7 @@ MenuDish::MenuDish()
 MenuDish::~MenuDish() {
 	cout << "Destroyed a dish: " << name << " (" << category << ")" << endl;
 }
+
+void MenuDish::display() const {
+		cout << "Dish: " << name << " (" << category << ")" << ", Price: " << price << " UAH" << endl;
+}

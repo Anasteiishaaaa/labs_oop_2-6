@@ -2,6 +2,7 @@
 #include "MenuDish.h"
 #include "Customer.h"
 #include "Order.h"
+using namespace std;
 
 int main()
 {
@@ -28,5 +29,25 @@ int main()
 	order1.display();
 	order1.payOrder();
 	order2.display();
+
+	cout << endl;
+
+	cout << "Copy and move constructors" << endl;
+
+	MenuDish originalDish("Dessert", "Tiramisu", 99.99);
+	MenuDish copiedDish = originalDish; 
+	cout << "Original dish: ";
+	originalDish.display();
+	cout << "Copied dish: ";
+	copiedDish.display();
+	cout << endl;
+
+	MenuDish movedDish = move(copiedDish);
+	cout << "Moved dish: ";
+	movedDish.display();
+	cout << "Copied dish after move: ";
+	copiedDish.display();
+	cout << endl;
+
     return 0;
 }

@@ -11,6 +11,10 @@ public:
 	MenuDish(string c, string n, double p);
 	MenuDish();
 	~MenuDish();
+
+	MenuDish(const MenuDish& other);
+	MenuDish(MenuDish&& other) noexcept;
+
 	void display() const;
 };
 

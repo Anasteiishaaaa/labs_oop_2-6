@@ -11,6 +11,17 @@ MenuDish::MenuDish()
 	:MenuDish("General", "Default", 0.0) {
 }
 
+MenuDish::MenuDish(const MenuDish& other)
+	:category(other.category), name(other.name), price(other.price) {
+	cout << "Copy constructor: " << name << " (" << category << ")" << endl;
+}
+
+MenuDish::MenuDish(MenuDish&& other) noexcept
+	:category(move(other.category)), name(move(other.name)), price(other.price) {
+	other.price = 0.0;
+	cout << "Move constructor: " << name << " (" << category << ")" << endl;
+}
+
 MenuDish::~MenuDish() {
 	cout << "Destroyed a dish: " << name << " (" << category << ")" << endl;
 }

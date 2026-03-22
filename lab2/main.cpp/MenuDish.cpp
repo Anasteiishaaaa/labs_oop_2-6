@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-MenuDish::MenuDish(string c, string n, double p)
+MenuDish::MenuDish(const string& c, const string& n, double p)
 	:category(c), name(n), price(p) {
 	cout << "Created a dish: " << name << " (" << category << ")" << endl;
 }

@@ -9,6 +9,7 @@ protected:
 	bool isPaid;
 	Customer customer; 
 	static int totalOrders;
+
 public:
 	Order(int id, double b, bool p, const Customer& cust);
 	Order();

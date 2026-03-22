@@ -22,6 +22,27 @@ MenuDish::MenuDish(MenuDish&& other) noexcept
 	cout << "Move constructor: " << name << " (" << category << ")" << endl;
 }
 
+MenuDish& MenuDish::operator=(const MenuDish& other) {
+	cout << "Copy assignment operator for: " << other.name << " (" << category << ")" << endl;
+	if (this != &other) {
+		category = other.category;
+		name = other.name;
+		price = other.price;
+	}
+	return *this;
+}
+
+MenuDish& MenuDish::operator=(MenuDish&& other) noexcept {
+	cout << "Move assignment operator for: " << other.name << " (" << category << ")" << endl;
+	if (this != &other) {
+		category = move(other.category);
+		name = move(other.name);
+		price = other.price;
+		other.price = 0.0;
+	}
+	return *this;
+}
+
 MenuDish::~MenuDish() {
 	cout << "Destroyed a dish: " << name << " (" << category << ")" << endl;
 }

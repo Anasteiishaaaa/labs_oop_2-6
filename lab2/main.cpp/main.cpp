@@ -42,18 +42,22 @@ int main()
 	cout << endl;
 
 	MenuDish originalDish("Dessert", "Tiramisu", 99.99);
-	MenuDish copiedDish = originalDish; 
+	MenuDish copiedDish;
+	copiedDish = originalDish;
+
+	MenuDish assignedDish;
+	assignedDish = originalDish;
 	cout << "Original dish: ";
 	originalDish.display();
-	cout << "Copied dish: ";
-	copiedDish.display();
+	cout << "Assigned dish: ";
+	assignedDish.display();
 	cout << endl;
 
-	MenuDish movedDish = move(copiedDish);
+	MenuDish movedDish = move(originalDish);
 	cout << "Moved dish: ";
 	movedDish.display();
-	cout << "Copied dish after move: ";
-	copiedDish.display();
+	cout << "Original dish after move: ";
+	originalDish.display();
 	cout << endl;
 
 	cout << endl;

@@ -15,6 +15,9 @@ public:
 	MenuDish(const MenuDish& other);
 	MenuDish(MenuDish&& other) noexcept;
 
+	MenuDish& operator=(const MenuDish& other);
+	MenuDish& operator=(MenuDish&& other) noexcept;
+
 	virtual ~MenuDish();
 	virtual void display() const;
 

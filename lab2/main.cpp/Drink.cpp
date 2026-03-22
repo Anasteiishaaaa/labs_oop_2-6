@@ -13,5 +13,5 @@ Drink ::~Drink() {
 
 void Drink::display() const {
 	MenuDish::display();
-	cout << "Volume: " << volumeMl << "ml, Type: " << (isAlcoholic ? "Hot" : "Cold") << endl;
+	cout << "Volume: " << volumeMl << "ml, Type: " << (isAlcoholic ? "Yes" : "No") << endl;
 }

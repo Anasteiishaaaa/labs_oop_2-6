@@ -10,5 +10,6 @@ class Drink : public MenuDish
 public: 
 	Drink(const string& c, const string& n, double p, int v, bool alc);
 	virtual ~Drink();
+	void display() const override;
 };
 

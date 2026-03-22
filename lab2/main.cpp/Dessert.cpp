@@ -10,3 +10,8 @@ Dessert::Dessert(const string& c, const string& n, double p, int cal, bool nuts)
 Dessert::~Dessert() {
 	cout << "Dessert destructor called for: " << name << endl;
 }
+
+void Dessert::display() const {
+	MenuDish::display();
+	cout << "Calories: " << calories << " kcal, Nuts: " << (containsNuts ? "Yes" : "No") << endl;
+}

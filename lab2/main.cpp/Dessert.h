@@ -9,5 +9,6 @@ class Dessert : public MenuDish
 public: 
 	Dessert(const string& c, const string& n, double p, int cal, bool nuts);
 	virtual ~Dessert();
+	void display() const override;
 };
 

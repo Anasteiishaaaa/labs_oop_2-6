@@ -10,3 +10,7 @@ MainCourse::~MainCourse() {
 	cout << "MainCourse destructor called for: " << name << endl;
 }
 
+void MainCourse::display() const {
+	MenuDish::display();
+	cout << "Weight: " << weightGrams << "g, Veg: " << (isVegetarian ? "Yes" : "No") << endl;
+}

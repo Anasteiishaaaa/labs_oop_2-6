@@ -13,8 +13,8 @@ protected:
 public:
 	Order(int id, double b, bool p, const Customer& cust);
 	Order();
-	virtual ~Order();
+	~Order();
 	void payOrder();
-	virtual void display() const;
+	void display() const;
 	static int getTotalOrders();
 };

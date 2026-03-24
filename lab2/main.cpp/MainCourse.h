@@ -9,7 +9,7 @@ class MainCourse : public MenuDish
 	bool isVegetarian;
 public: 
 	MainCourse(const string& c, const string& n, double p, int w, bool veg);
-	virtual ~MainCourse();
-	void display() const override;
+	~MainCourse();
+	void display() const;
 };
 

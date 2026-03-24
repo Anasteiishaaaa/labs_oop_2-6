@@ -8,7 +8,7 @@ class Dessert : public MenuDish
 	bool containsNuts;
 public: 
 	Dessert(const string& c, const string& n, double p, int cal, bool nuts);
-	virtual ~Dessert();
-	void display() const override;
+	~Dessert();
+	void display() const;
 };
 

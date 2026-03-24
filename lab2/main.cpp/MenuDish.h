@@ -18,8 +18,8 @@ public:
 	MenuDish& operator=(const MenuDish& other);
 	MenuDish& operator=(MenuDish&& other) noexcept;
 
-	virtual ~MenuDish();
-	virtual void display() const;
+	~MenuDish();
+	void display() const;
 
 };
 

@@ -18,6 +18,8 @@ public:
 	MenuDish& operator=(const MenuDish& other);
 	MenuDish& operator=(MenuDish&& other) noexcept;
 
+	void staticBinding() const;
+	
 	~MenuDish();
 	void display() const;
 

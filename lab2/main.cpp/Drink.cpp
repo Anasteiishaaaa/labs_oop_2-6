@@ -15,3 +15,7 @@ void Drink::display() const {
 	MenuDish::display();
 	cout << "Volume: " << volumeMl << "ml, Type: " << (isAlcoholic ? "Yes" : "No") << endl;
 }
+
+void Drink::staticBinding() const {
+	cout << "I am a Drink" << endl;
+};

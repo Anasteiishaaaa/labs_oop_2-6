@@ -38,7 +38,8 @@ int main()
 
 	cout << endl;
 
-	cout << "Copy and move constructors" << endl;
+	cout << "----------------------------------------" << endl;
+	cout << "COPY and MOVE CONSTRUCTORS" << endl;
 	cout << endl;
 
 	MenuDish originalDish("Dessert", "Tiramisu", 99.99);
@@ -72,7 +73,7 @@ int main()
 	cout << endl;
 
 	cout << "----------------------------------------" << endl;
-	cout << "Inheritance" << endl;
+	cout << "INHERITANCE" << endl;
 	cout << endl;
 
 	cout << "MENU" << endl;
@@ -99,6 +100,18 @@ int main()
 	cout << endl;
 
 	cout << "Total orders after lab4: " << Order::getTotalOrders() << endl;
+	cout << endl;
+
+	cout << "----------------------------------------" << endl;
+	cout << "POLYMORPHISM" << endl;
+	cout << endl;
+
+	MenuDish* dishPtr = new Drink("Drink", "Latte", 65.0, 200, false);
+	dishPtr->staticBinding();
+	delete dishPtr;
+	cout << endl;
+
+	cout << "----------------------------------------" << endl;
 	cout << endl;
 
     return 0;

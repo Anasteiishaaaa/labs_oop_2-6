@@ -50,3 +50,7 @@ MenuDish::~MenuDish() {
 void MenuDish::display() const {
 		cout << "Dish: " << name << " (" << category << ")" << ", Price: " << price << " UAH" << endl;
 }
+
+void MenuDish::staticBinding() const {
+	cout << "I am a MenuDish" << endl;
+}

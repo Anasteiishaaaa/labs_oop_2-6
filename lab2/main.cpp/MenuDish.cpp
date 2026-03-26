@@ -54,3 +54,7 @@ void MenuDish::display() const {
 void MenuDish::staticBinding() const {
 	cout << "I am a MenuDish" << endl;
 }
+
+void MenuDish::getDescription() const {
+	cout << "Standart meni item." << endl;
+}

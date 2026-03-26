@@ -11,6 +11,6 @@ public:
 	Drink(const string& c, const string& n, double p, int v, bool alc);
 	~Drink() override;
 	void display() const override;
-	void getDescription() const override;
+	void getDescription() const override final;
 	void staticBinding() const;
 };

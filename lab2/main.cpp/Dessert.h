@@ -2,7 +2,7 @@
 #include "MenuDish.h"
 #include <string>
 
-class Dessert : public MenuDish
+class Dessert final: public MenuDish
 { protected: 
 	int calories;
 	bool containsNuts;
@@ -12,3 +12,4 @@ public:
 	void display() const;
 };
 
+// class Cake : public Dessert {};

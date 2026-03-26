@@ -20,7 +20,7 @@ public:
 
 	void staticBinding() const;
 	
-	~MenuDish();
+	virtual ~MenuDish();
 	virtual void display() const;
 	virtual void getDescription() const;
 };

@@ -129,6 +129,9 @@ int main()
 
 	delete menuItem1;
 	delete menuItem2;
+	cout << endl;
+	cout << "----------------------------------------" << endl;
+	cout << endl;
 
     return 0;
 }

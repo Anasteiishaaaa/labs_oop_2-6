@@ -9,7 +9,7 @@ class Drink : public MenuDish
 	bool isAlcoholic;
 public: 
 	Drink(const string& c, const string& n, double p, int v, bool alc);
-	~Drink();
+	~Drink() override;
 	void display() const override;
 	void getDescription() const override;
 	void staticBinding() const;

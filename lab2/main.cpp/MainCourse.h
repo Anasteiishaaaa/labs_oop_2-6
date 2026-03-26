@@ -7,9 +7,9 @@ class MainCourse : public MenuDish
 { private:
 	int weightGrams;
 	bool isVegetarian;
-public: 
+public:
 	MainCourse(const string& c, const string& n, double p, int w, bool veg);
-	~MainCourse();
+	~MainCourse() override;
 	void display() const;
 };
 

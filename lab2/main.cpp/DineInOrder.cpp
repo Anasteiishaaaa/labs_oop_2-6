@@ -16,3 +16,8 @@ void DineInOrder::display() const {
 	cout << "Dine-in details: " << endl;
 	cout << "Table number: " << tableNumber << ", Tips: " << tips << " UAH" << endl;
 }
+
+void DineInOrder::processOrder() const {
+	cout << "Processing dine-in order ID: " << orderID << endl;
+	cout << "Serving at table number: " << tableNumber << endl;
+}

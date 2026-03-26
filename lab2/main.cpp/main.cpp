@@ -35,11 +35,11 @@ int main()
 
 	cout << endl;
 
-	Order order1(1, 539.99, true, customer1);
-	Order order2;
-	order1.display();
-	order1.payOrder();
-	order2.display();
+	//Order order1(1, 539.99, true, customer1);
+	//Order order2;
+	//order1.display();
+	//order1.payOrder();
+	//order2.display();
 
 	cout << endl;
 
@@ -144,6 +144,21 @@ int main()
 	cout << endl;
 	printDishDetails(myLatte);
 	printDishDetails(myCake);
+
+	cout << endl;
+	cout << "----------------------------------------" << endl;
+	cout << endl;
+
+	//Order genericOrder;
+
+	Order* order1 = new DineInOrder(2, 299.99, false, customer2, 5, 50);
+	Order* order2 = new OnlineOrder(3, 199.99, false, customer3, "123 Main St", 20);
+
+	order1->processOrder();
+	order2->processOrder();
+
+	delete order1;
+	delete order2;
 
 	cout << endl;
 	cout << "----------------------------------------" << endl;

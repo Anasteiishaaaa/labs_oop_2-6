@@ -37,3 +37,8 @@ void OnlineOrder::display() const {
 	cout << "Delivery details: " << endl;
 	cout << "Address: " << deliveryAddress << ", Delivery fee: " << deliveryFee << " UAH" << endl;
 }
+
+void OnlineOrder::processOrder() const {
+	cout << "Processing online order ID: " << orderID << endl;
+	cout << "Preparing for delivery to: " << deliveryAddress << endl;
+}

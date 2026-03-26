@@ -10,11 +10,11 @@ private:
 	double deliveryFee;
 public: 
 	OnlineOrder(int id, double b, bool p, const Customer& cust, const string& address, double fee);
-
-	~OnlineOrder();
+	~OnlineOrder() override;
 	OnlineOrder(const OnlineOrder& other);
 	OnlineOrder(OnlineOrder&& other) noexcept;
 	OnlineOrder& operator=(const OnlineOrder& rhs);
 	void display() const;
+	void processOrder() const override;
 };
 

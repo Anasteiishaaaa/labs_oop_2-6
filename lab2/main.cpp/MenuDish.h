@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
+#include "IPrintable.h"
 
 using namespace std;
 
-class MenuDish { 
+class MenuDish : public IPrintable { 
 	protected:
 		string category;
 		string name;
@@ -23,5 +24,7 @@ public:
 	virtual ~MenuDish();
 	virtual void display() const;
 	virtual void getDescription() const;
+
+	void printSummary() const override;
 };
 

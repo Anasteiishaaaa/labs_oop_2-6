@@ -28,3 +28,7 @@ void Customer::display() const {
 void Customer::addPoints(double b) {
 	bonuses += b;
 }
+
+void Customer::printSummary() const {
+	cout << "[IPrintable] Customer Name: " << name << endl;
+}

@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
+#include "IPrintable.h"
 using namespace std;
 
-class Customer {
+class Customer : public IPrintable {
 private:
 	string name;
 	string phoneNumber;
@@ -14,6 +15,8 @@ public:
 	~Customer();
 	void display() const;
 	void addPoints(double b);
+
+	void printSummary() const override;
 };
 
 

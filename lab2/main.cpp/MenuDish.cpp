@@ -58,3 +58,7 @@ void MenuDish::staticBinding() const {
 void MenuDish::getDescription() const {
 	cout << "Standart meni item." << endl;
 }
+
+void MenuDish::printSummary() const {
+	cout << "[IPrintable] Dish: " << name << " (" << price << " UAH)" << endl;
+}

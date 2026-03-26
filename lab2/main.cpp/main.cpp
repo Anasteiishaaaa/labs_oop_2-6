@@ -164,5 +164,21 @@ int main()
 	cout << "----------------------------------------" << endl;
 	cout << endl;
 
+	cout << "INTERFACES" << endl;
+	Drink myDrink("Drink", "Latte", 65.0, 200, false);
+	Customer myCustomer("Alice", "VIP", 15);
+
+	IPrintable* printableItems[2];
+	printableItems[0] = &myDrink;
+	printableItems[1] = &myCustomer;
+
+	for (int i = 0; i < 2; i++) {
+		printableItems[i]->printSummary();
+	}
+
+	cout << endl;
+	cout << "----------------------------------------" << endl;
+	cout << endl;
+
     return 0;
 }

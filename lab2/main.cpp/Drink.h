@@ -10,6 +10,7 @@ class Drink : public MenuDish
 public: 
 	Drink(const string& c, const string& n, double p, int v, bool alc);
 	~Drink();
-	void display() const;
+	void display() const override;
+	void getDescription() const override;
 	void staticBinding() const;
 };

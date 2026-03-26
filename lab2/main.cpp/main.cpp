@@ -114,5 +114,21 @@ int main()
 	cout << "----------------------------------------" << endl;
 	cout << endl;
 
+	MenuDish *menuItem1 = new Drink("Drink", "Latte", 65.0, 200, false);
+	MenuDish *menuItem2 = new Drink("Alcohol", "Wine", 120.0, 120, true);
+
+	MenuDish* menuItems[] = { menuItem1, menuItem2 };
+	cout << endl;
+
+	cout << "RUN-TIME POLIMORPHISM" << endl;
+	for (int i = 0; i < 2; i++) {
+		menuItems[i]->display();
+		menuItems[i]->getDescription();
+		cout << endl;
+	}
+
+	delete menuItem1;
+	delete menuItem2;
+
     return 0;
 }

@@ -10,6 +10,11 @@
 
 using namespace std;
 
+void printDishDetails(const MenuDish &dish) {
+	cout << "Printing via Reference" << endl;
+	dish.display();
+}
+
 int main()
 {
 	MenuDish dish1("Soups", "Borscht", 159.99);
@@ -129,6 +134,17 @@ int main()
 
 	delete menuItem1;
 	delete menuItem2;
+	cout << endl;
+	cout << "----------------------------------------" << endl;
+	cout << endl;
+
+	Drink myLatte("Drink", "Latte", 65.0, 200, false);
+	Dessert myCake("Dessert", "Cheesecake", 89.99, 350, true);
+
+	cout << endl;
+	printDishDetails(myLatte);
+	printDishDetails(myCake);
+
 	cout << endl;
 	cout << "----------------------------------------" << endl;
 	cout << endl;

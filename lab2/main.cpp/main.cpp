@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <vector>
 #include "MenuDish.h"
 #include "Customer.h"
 #include "Order.h"
@@ -7,6 +9,7 @@
 #include "MainCourse.h"
 #include "Drink.h"
 #include "Dessert.h"
+#include "IPrintable.h"
 
 using namespace std;
 
@@ -17,167 +20,100 @@ void printDishDetails(const MenuDish &dish) {
 
 int main()
 {
-	MenuDish dish1("Soups", "Borscht", 159.99);
-	MenuDish dish2("Main courses", "Chicken Kiev", 129.99);
-	MenuDish dish3;
-	dish1.display();
-	dish2.display();
-	dish3.display();
-
-	cout << endl;
+	int choice;
+	bool isRunning = true;
 
 	Customer customer1("Nastya", "0970000000", 20);
 	Customer customer2("Alice");
-	Customer customer3;
-	customer1.display();
-	customer2.display();
-	customer3.display();
 
-	cout << endl;
+	while (isRunning) {
+		cout << "------- MAIN RESTAURANT MENU -------" << endl;
+		cout << "1. View Menu" << endl;
+		cout << "2. Add new customer" << endl;
+		cout << "3. Create order" << endl;
+		cout << "4. Print all information" << endl;
+		cout << "0. Exit the program" << endl;
+		cout << "------------------------------------" << endl;
+		cout << "Your choice: " << endl;
 
-	//Order order1(1, 539.99, true, customer1);
-	//Order order2;
-	//order1.display();
-	//order1.payOrder();
-	//order2.display();
+		cin >> choice;
 
-	cout << endl;
+		switch (choice) {
+		case 1: {
+			cout << "--- Our menu ---" << endl;
+			MenuDish* menuItem1 = new MainCourse("Main courses", "Grilled Steak", 299.99, 300, false);
+			MenuDish* menuItem2 = new Drink("Drinks", "Mojito", 149.99, 250, true);
+			MenuDish* menuItem3 = new Dessert("Desserts", "Chocolate Cake", 119.99, 450, true);
 
-	cout << "----------------------------------------" << endl;
-	cout << "COPY and MOVE CONSTRUCTORS" << endl;
-	cout << endl;
+			MenuDish* menuItems[] = { menuItem1, menuItem2, menuItem3 };
+			for (int i = 0; i < 3; i++) {
+				menuItems[i]->display();
+				cout << endl;
+			}
 
-	MenuDish originalDish("Dessert", "Tiramisu", 99.99);
-	MenuDish copiedDish;
-	copiedDish = originalDish;
+			delete menuItem1;
+			delete menuItem2;
+			delete menuItem3;
+			break;
+		}
 
-	MenuDish assignedDish;
-	assignedDish = originalDish;
-	cout << "Original dish: ";
-	originalDish.display();
-	cout << "Assigned dish: ";
-	assignedDish.display();
-	cout << endl;
+		case 2: {
+			cout << "--- Client registration ---" << endl;
+			string name;
+			cout << "Enter customer name: ";
+			cin >> name;
 
-	MenuDish movedDish = move(originalDish);
-	cout << "Moved dish: ";
-	movedDish.display();
-	cout << "Original dish after move: ";
-	originalDish.display();
-	cout << endl;
+			Customer newCustomer(name);
+			cout << "Customer " << name << " seccesfully created!" << endl;
+			newCustomer.display();
+			break;
+		}
 
-	cout << endl;
-	cout << "Const and static" << endl;
-	cout << endl;
+		case 3: {
+			cout << "--- Create new order ---" << endl;
+			Order* newOrder1 = new DineInOrder(1, 539.99, true, customer1, 5, 50);
+			Order* newOrder2 = new OnlineOrder(2, 199.99, false, customer2, "123 Main St", 20);
 
-	const Customer vipCustomer("Admin", "0980000000", 1000);
-	vipCustomer.display();
-	cout << endl;
+			cout << "Dine-in order processing:" << endl;
+			newOrder1->processOrder();
+			newOrder1->display();
 
-	cout << "Total orders created: " << Order::getTotalOrders() << endl;
-	cout << endl;
+			cout << "Online order processing:" << endl;
+			newOrder2->processOrder();
+			newOrder2->display();
 
-	cout << "----------------------------------------" << endl;
-	cout << "INHERITANCE" << endl;
-	cout << endl;
+			delete newOrder1;
+			delete newOrder2;
 
-	cout << "MENU" << endl;
+			break;
+		}
 
-	MainCourse steak("Main courses", "Grilled Steak", 299.99, 300, false);
-	steak.display();
-	cout << endl;
-	
-	Drink cocktail("Drinks", "Mojito", 149.99, 250, true);
-	cocktail.display();
+		case 4: {
+			cout << "--- All information ---" << endl;
 
-	Dessert cake("Desserts", "Chocolate Cake", 119.99, 450, true);
-	cake.display();
-	cout << endl;
+			Drink myDrink("Drink", "Mojito", 149.99, 250, true);
+			Customer vipCustomer("Admin", "0980000000", 1000);
 
-	cout << "ORDERS" << endl;
+			IPrintable* printableItems[2];
+			printableItems[0] = &myDrink;
+			printableItems[1] = &vipCustomer;
 
-	DineInOrder dineInOrder(2, 299.99, false, customer2, 5, 50);
-	dineInOrder.display();
-	cout << endl;
+			for (int i = 0; i < 2; i++) {
+				printableItems[i]->printSummary();
+			}
+			break;
+		}
 
-	OnlineOrder onlineOrder(3, 199.99, false, customer3, "123 Main St", 20);
-	onlineOrder.display();
-	cout << endl;
+		case 0: {
+			cout << "Exiting the program. Goodbye!" << endl;
+			break;
+		}
 
-	cout << "Total orders after lab4: " << Order::getTotalOrders() << endl;
-	cout << endl;
-
-	cout << "----------------------------------------" << endl;
-	cout << "POLYMORPHISM" << endl;
-	cout << endl;
-
-	MenuDish* dishPtr = new Drink("Drink", "Latte", 65.0, 200, false);
-	dishPtr->staticBinding();
-	delete dishPtr;
-	cout << endl;
-
-	cout << "----------------------------------------" << endl;
-	cout << endl;
-
-	MenuDish *menuItem1 = new Drink("Drink", "Latte", 65.0, 200, false);
-	MenuDish *menuItem2 = new Drink("Alcohol", "Wine", 120.0, 120, true);
-
-	MenuDish* menuItems[] = { menuItem1, menuItem2 };
-	cout << endl;
-
-	cout << "RUN-TIME POLIMORPHISM" << endl;
-	for (int i = 0; i < 2; i++) {
-		menuItems[i]->display();
-		menuItems[i]->getDescription();
-		cout << endl;
+		default: {
+			cout << "Invalid choice. Please try again." << endl;
+		}
+		}
 	}
-
-	delete menuItem1;
-	delete menuItem2;
-	cout << endl;
-	cout << "----------------------------------------" << endl;
-	cout << endl;
-
-	Drink myLatte("Drink", "Latte", 65.0, 200, false);
-	Dessert myCake("Dessert", "Cheesecake", 89.99, 350, true);
-
-	cout << endl;
-	printDishDetails(myLatte);
-	printDishDetails(myCake);
-
-	cout << endl;
-	cout << "----------------------------------------" << endl;
-	cout << endl;
-
-	//Order genericOrder;
-
-	Order* order1 = new DineInOrder(2, 299.99, false, customer2, 5, 50);
-	Order* order2 = new OnlineOrder(3, 199.99, false, customer3, "123 Main St", 20);
-
-	order1->processOrder();
-	order2->processOrder();
-
-	delete order1;
-	delete order2;
-
-	cout << endl;
-	cout << "----------------------------------------" << endl;
-	cout << endl;
-
-	cout << "INTERFACES" << endl;
-	Drink myDrink("Drink", "Latte", 65.0, 200, false);
-	Customer myCustomer("Alice", "VIP", 15);
-
-	IPrintable* printableItems[2];
-	printableItems[0] = &myDrink;
-	printableItems[1] = &myCustomer;
-
-	for (int i = 0; i < 2; i++) {
-		printableItems[i]->printSummary();
-	}
-
-	cout << endl;
-	cout << "----------------------------------------" << endl;
 	cout << endl;
 
     return 0;

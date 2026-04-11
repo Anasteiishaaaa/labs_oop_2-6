@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <fstream>
+#include <stdexcept>
 
 #include "MenuDish.h"
 #include "Customer.h"
@@ -38,53 +39,75 @@ void adminMenu(bool& isAppRunning) {
 
 		switch (choice) {
 			case 1: {
-				string category, name;
-				double price;
-				int weight;
-				bool isVegetarian;
-				cout << "Enter dish name: ";
-				cin >> name;
-				cout << "Enter dish price: ";
-				cin >> price;
-				cout << "Enter dish weight (grams): ";
-				cin >> weight;
-				cout << "Is the dish vegetarian? (1 for yes, 0 for no): ";
-				cin >> isVegetarian;
-				restaurantMenu.push_back(make_shared<MainCourse>("Main Course", name, price, weight, isVegetarian));
+				try {
+					string category, name;
+					double price;
+					int weight;
+					bool isVegetarian;
+					cout << "Enter dish name: ";
+					cin >> name;
+					cout << "Enter dish price: ";
+					cin >> price;
+					cout << "Enter dish weight (grams): ";
+					cin >> weight;
 
-				ofstream outFile("menu.txt", ios::app);
-				if (outFile.is_open()) {
-					outFile << "Main Course: " << name << ", Price: " << price << ", Weight: " << weight << "g, Vegetarian: " << (isVegetarian ? "Yes" : "No") << endl;
-					outFile.close();
-					cout << "Dish saved to menu.txt!" << endl;
+					if (price < 0 || weight <= 0) {
+						throw invalid_argument("Price must be non-negative and weight must be positive.");
+					}
+
+					cout << "Is the dish vegetarian? (1 for yes, 0 for no): ";
+					cin >> isVegetarian;
+					restaurantMenu.push_back(make_shared<MainCourse>("Main Course", name, price, weight, isVegetarian));
+
+					ofstream outFile("menu.txt", ios::app);
+					if (outFile.is_open()) {
+						outFile << "Main Course: " << name << " " << price << " " << weight << " " << (isVegetarian ? "Yes" : "No") << endl;
+						outFile.close();
+						cout << "Dish saved to menu.txt!" << endl;
+					}
 				}
+				catch (const exception& e) {
+					cout << "Error: " << e.what() << endl;
+				}
+
 				break;
 			}
 
 			case 2: {
-				string name;
-				double price;
-				int volume;
-				bool isAlcoholic;
-				cout << "Enter drink name: ";
-				cin >> name;
-				cout << "Enter drink price: ";
-				cin >> price;
-				cout << "Enter drink volume (ml): ";
-				cin >> volume;
-				cout << "Is the drink alcoholic? (1 for yes, 0 for no): ";
-				cin >> isAlcoholic;
-				restaurantMenu.push_back(make_shared<Drink>("Drink", name, price, volume, isAlcoholic));
-				ofstream outFile("menu.txt", ios::app);
-				if (outFile.is_open()) {
-					outFile << "Drink: " << name << ", Price: " << price << ", Volume: " << volume << "ml, Alcoholic: " << isAlcoholic << endl;
-					outFile.close();
-					cout << "Drink saved to menu.txt!" << endl;
+				try {
+					string name;
+					double price;
+					int volume;
+					bool isAlcoholic;
+					cout << "Enter drink name: ";
+					cin >> name;
+					cout << "Enter drink price: ";
+					cin >> price;
+					cout << "Enter drink volume (ml): ";
+					cin >> volume;
+
+					if (price < 0 || volume <= 0) {
+						throw invalid_argument("Price must be non-negative and volume must be positive.");
+					}
+
+					cout << "Is the drink alcoholic? (1 for yes, 0 for no): ";
+					cin >> isAlcoholic;
+					restaurantMenu.push_back(make_shared<Drink>("Drink", name, price, volume, isAlcoholic));
+					ofstream outFile("menu.txt", ios::app);
+					if (outFile.is_open()) {
+						outFile << "Drink: " << name << " " << price << " " << volume << " " << isAlcoholic << endl;
+						outFile.close();
+						cout << "Drink saved to menu.txt!" << endl;
+					}
+				}
+				catch (const exception& e) {
+					cout << "Error: " << e.what() << endl;
 				}
 				break;
 			}
 
 			case 3: {
+				try{
 				string name;
 				double price;
 				int calories;
@@ -95,15 +118,24 @@ void adminMenu(bool& isAppRunning) {
 				cin >> price;
 				cout << "Enter dessert calories: ";
 				cin >> calories;
-				cout << "Is the dessert contains nuts? (1 for yes, 0 for no): ";
+
+				if (price < 0 || calories <= 0) {
+					throw invalid_argument("Price must be non-negative and calories must be positive.");
+				}
+
+				cout << "Does the dessert contains nuts? (1 for yes, 0 for no): ";
 				cin >> containsNuts;
 				restaurantMenu.push_back(make_shared<Dessert>("Dessert", name, price, calories, containsNuts));
 
 				ofstream outFile("menu.txt", ios::app);
 				if (outFile.is_open()) {
-					outFile << "Dessert: " << name << ", Price: " << price << ", Calories: " << calories << "kcal, Contains nuts?: " << containsNuts << endl;
+					outFile << "Dessert: " << name << " " << price << " " << calories << " " << containsNuts << endl;
 					outFile.close();
+				}
 					cout << "Dessert saved to menu.txt!" << endl;
+				}
+				catch (const exception& e) {
+					cout << "Error: " << e.what() << endl;
 				}
 				break;
 			}

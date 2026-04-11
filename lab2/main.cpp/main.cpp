@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
+
 #include "MenuDish.h"
 #include "Customer.h"
 #include "Order.h"
@@ -13,108 +15,203 @@
 
 using namespace std;
 
-void printDishDetails(const MenuDish &dish) {
-	cout << "Printing via Reference" << endl;
-	dish.display();
+vector<shared_ptr<MenuDish>> restaurantMenu;
+vector<shared_ptr<Customer>> customers;
+
+void adminMenu(bool& isAppRunning) {
+	int choice;
+	bool isAdminRunning = true;
+
+	while (isAdminRunning && isAppRunning) {
+		cout << "------- ADMIN MENU -------" << endl;
+		cout << "1. Add new dish to menu" << endl;
+		cout << "2. Add new drink to menu" << endl;
+		cout << "3. View all menu" << endl;
+		cout << "4. View customers" << endl;
+		cout << "5. Log out of account" << endl;
+		cout << "0. Turn off the system" << endl;
+		cout << "--------------------------" << endl;
+		cout << "Your choice : " << endl;
+		cin >> choice;
+
+		switch (choice) {
+			case 1: {
+				string category, name;
+				double price;
+				int weight;
+				bool isVegetarian;
+				cout << "Enter dish name: ";
+				cin >> name;
+				cout << "Enter dish price: ";
+				cin >> price;
+				cout << "Enter dish weight (grams): ";
+				cin >> weight;
+				cout << "Is the dish vegetarian? (1 for yes, 0 for no): ";
+				cin >> isVegetarian;
+				restaurantMenu.push_back(make_shared<MainCourse>("Main Course", name, price, weight, isVegetarian));
+				cout << "Dish added to menu!" << endl;
+				break;
+			}
+
+			case 2: {
+				string name;
+				double price;
+				int volume;
+				bool isAlcoholic;
+				cout << "Enter drink name: ";
+				cin >> name;
+				cout << "Enter drink price: ";
+				cin >> price;
+				cout << "Enter drink volume (ml): ";
+				cin >> volume;
+				cout << "Is the drink alcoholic? (1 for yes, 0 for no): ";
+				cin >> isAlcoholic;
+				restaurantMenu.push_back(make_shared<Drink>("Drink", name, price, volume, isAlcoholic));
+				cout << "Drink added to menu!" << endl;
+				break;
+			}
+
+			case 3: {
+				cout << "--- Our menu ---" << endl;
+				if (restaurantMenu.empty()) cout << "Menu is empty!" << endl;
+				for (size_t i = 0; i < restaurantMenu.size(); i++) {
+						cout << i+1 << ". ";
+						restaurantMenu[i]->display();
+					}
+				break;
+				}
+
+			case 4: {
+				cout << "--- Customers ---" << endl;
+				if (customers.empty()) cout << "No customers registered!" << endl;
+				for (size_t i = 0; i < customers.size(); i++) {
+						customers[i]->display();
+					}
+				break;
+				}
+
+			case 5: {
+				cout << "Returning to main menu..." << endl;
+				isAdminRunning = false;
+			}
+				break;
+
+
+			case 0: {
+				cout << "Turning off the system. Goodbye!" << endl;
+				isAppRunning = false;
+				isAdminRunning = false;
+				break;
+			}
+		
+		default:
+			break;
+		}
+	}
 }
 
-int main()
-{
+void userMenu(bool& isAppRunning) {
 	int choice;
-	bool isRunning = true;
+	bool isUserRunning = true;
 
-	Customer customer1("Nastya", "0970000000", 20);
-	Customer customer2("Alice");
-
-	while (isRunning) {
-		cout << "------- MAIN RESTAURANT MENU -------" << endl;
+	while (isUserRunning && isAppRunning) {
+		cout << "------- USER MENU -------" << endl;
 		cout << "1. View Menu" << endl;
-		cout << "2. Add new customer" << endl;
+		cout << "2. Sign up in system" << endl;
 		cout << "3. Create order" << endl;
 		cout << "4. Print all information" << endl;
+		cout << "5. Log out of account" << endl;
 		cout << "0. Exit the program" << endl;
-		cout << "------------------------------------" << endl;
+		cout << "------------------------- " << endl;
 		cout << "Your choice: " << endl;
-
 		cin >> choice;
 
 		switch (choice) {
 		case 1: {
 			cout << "--- Our menu ---" << endl;
-			MenuDish* menuItem1 = new MainCourse("Main courses", "Grilled Steak", 299.99, 300, false);
-			MenuDish* menuItem2 = new Drink("Drinks", "Mojito", 149.99, 250, true);
-			MenuDish* menuItem3 = new Dessert("Desserts", "Chocolate Cake", 119.99, 450, true);
-
-			MenuDish* menuItems[] = { menuItem1, menuItem2, menuItem3 };
-			for (int i = 0; i < 3; i++) {
-				menuItems[i]->display();
-				cout << endl;
+			if (restaurantMenu.empty()) cout << "Menu is empty!" << endl;
+			for (size_t i = 0; i < restaurantMenu.size(); i++) {
+				cout << i + 1 << ". ";
+				restaurantMenu[i]->display();
 			}
-
-			delete menuItem1;
-			delete menuItem2;
-			delete menuItem3;
 			break;
 		}
-
 		case 2: {
-			cout << "--- Client registration ---" << endl;
 			string name;
 			cout << "Enter customer name: ";
 			cin >> name;
-
-			Customer newCustomer(name);
-			cout << "Customer " << name << " seccesfully created!" << endl;
-			newCustomer.display();
+			auto newCustomer = make_shared<Customer>(name);
+			customers.push_back(newCustomer);
+			cout << "Customer " << name << " successfully created!" << endl;
+			newCustomer->display();
 			break;
 		}
-
 		case 3: {
 			cout << "--- Create new order ---" << endl;
-			Order* newOrder1 = new DineInOrder(1, 539.99, true, customer1, 5, 50);
-			Order* newOrder2 = new OnlineOrder(2, 199.99, false, customer2, "123 Main St", 20);
-
-			cout << "Dine-in order processing:" << endl;
-			newOrder1->processOrder();
-			newOrder1->display();
-
-			cout << "Online order processing:" << endl;
-			newOrder2->processOrder();
-			newOrder2->display();
-
-			delete newOrder1;
-			delete newOrder2;
-
 			break;
 		}
-
 		case 4: {
 			cout << "--- All information ---" << endl;
-
-			Drink myDrink("Drink", "Mojito", 149.99, 250, true);
-			Customer vipCustomer("Admin", "0980000000", 1000);
-
-			IPrintable* printableItems[2];
-			printableItems[0] = &myDrink;
-			printableItems[1] = &vipCustomer;
-
-			for (int i = 0; i < 2; i++) {
-				printableItems[i]->printSummary();
-			}
 			break;
 		}
-
+		case 5: {
+			cout << "Returning to main menu..." << endl;
+			isUserRunning = false;
+			break;
+		}
 		case 0: {
 			cout << "Exiting the program. Goodbye!" << endl;
+			isAppRunning = false;
+			isUserRunning = false;
 			break;
 		}
-
 		default: {
 			cout << "Invalid choice. Please try again." << endl;
+			break;
 		}
 		}
 	}
-	cout << endl;
-
-    return 0;
 }
+
+	int main() {
+		bool isAppRunning = true;
+		int roleChoice;
+		const string adminPassword = "admin123";
+
+		restaurantMenu.push_back(make_shared<MainCourse>("Main Course", "Grilled Steak", 299.99, 300, false));
+		
+		while (isAppRunning) {
+			cout << "------- WELCOME TO THE RESTAURANT -------" << endl;
+			cout << "Select your role:" << endl;
+			cout << "1. Admin" << endl;
+			cout << "2. User" << endl;
+			cout << "0. Exit" << endl;
+			cout << "-----------------------------------------" << endl;
+			cout << "Your choice: " << endl;
+			cin >> roleChoice;
+
+			if (roleChoice == 1) {
+				string password;
+				cout << "Enter admin password: ";
+				cin >> password;
+				if (password == adminPassword) {
+					adminMenu(isAppRunning);
+				}
+				else {
+					cout << "Incorrect password. Access denied." << endl;
+				}
+				}
+
+				else if (roleChoice == 2) {
+					userMenu(isAppRunning);
+				}
+				else if (roleChoice == 0) {
+					cout << "Exiting the program. Goodbye!" << endl;
+					isAppRunning = false;
+				}
+				else {
+					cout << "Invalid choice. Please try again." << endl;
+				}
+		}
+			return 0;
+	}

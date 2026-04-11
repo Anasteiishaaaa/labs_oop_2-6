@@ -210,7 +210,40 @@ void userMenu(bool& isAppRunning) {
 	}
 }
 
+void loadMenuFromFile() {
+	ifstream inFile("menu.txt");
+	if (!inFile.is_open()) return; 
+
+	string type, name;
+	double price;
+	int calories;
+	bool containsNuts;
+
+	while (inFile >> type >> name >> price) {
+		if (type == "MainCourse") {
+			int weight;
+			bool isVegetarian;
+			inFile >> weight >> isVegetarian;
+			restaurantMenu.push_back(make_shared<MainCourse>("Main Course", name, price, weight, isVegetarian));
+		}
+		else if (type == "Drink") {
+			int volume;
+			bool isAlcoholic;
+			inFile >> volume >> isAlcoholic;
+			restaurantMenu.push_back(make_shared<Drink>("Drink", name, price, volume, isAlcoholic));
+		}
+		else if (type == "Dessert") {
+			int calories;
+			bool containsNuts;
+			inFile >> calories >> containsNuts;
+			restaurantMenu.push_back(make_shared<Dessert>("Dessert", name, price, calories, containsNuts));
+		}
+	}
+	inFile.close();
+}
+
 	int main() {
+		loadMenuFromFile();
 		bool isAppRunning = true;
 		int roleChoice;
 		const string adminPassword = "admin123";

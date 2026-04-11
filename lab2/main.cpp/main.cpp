@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <fstream>
 
 #include "MenuDish.h"
 #include "Customer.h"
@@ -50,7 +51,13 @@ void adminMenu(bool& isAppRunning) {
 				cout << "Is the dish vegetarian? (1 for yes, 0 for no): ";
 				cin >> isVegetarian;
 				restaurantMenu.push_back(make_shared<MainCourse>("Main Course", name, price, weight, isVegetarian));
-				cout << "Dish added to menu!" << endl;
+
+				ofstream outFile("menu.txt", ios::app);
+				if (outFile.is_open()) {
+					outFile << "Main Course: " << name << ", Price: " << price << ", Weight: " << weight << "g, Vegetarian: " << (isVegetarian ? "Yes" : "No") << endl;
+					outFile.close();
+					cout << "Dish saved to menu.txt!" << endl;
+				}
 				break;
 			}
 
@@ -68,7 +75,12 @@ void adminMenu(bool& isAppRunning) {
 				cout << "Is the drink alcoholic? (1 for yes, 0 for no): ";
 				cin >> isAlcoholic;
 				restaurantMenu.push_back(make_shared<Drink>("Drink", name, price, volume, isAlcoholic));
-				cout << "Drink added to menu!" << endl;
+				ofstream outFile("menu.txt", ios::app);
+				if (outFile.is_open()) {
+					outFile << "Drink: " << name << ", Price: " << price << ", Volume: " << volume << "ml, Alcoholic: " << isAlcoholic << endl;
+					outFile.close();
+					cout << "Drink saved to menu.txt!" << endl;
+				}
 				break;
 			}
 
@@ -76,17 +88,23 @@ void adminMenu(bool& isAppRunning) {
 				string name;
 				double price;
 				int calories;
-				bool isSweet;
+				bool containsNuts;
 				cout << "Enter dessert name: ";
 				cin >> name;
 				cout << "Enter dessert price: ";
 				cin >> price;
 				cout << "Enter dessert calories: ";
 				cin >> calories;
-				cout << "Is the dessert sweet? (1 for yes, 0 for no): ";
-				cin >> isSweet;
-				restaurantMenu.push_back(make_shared<Dessert>("Dessert", name, price, calories, isSweet));
-				cout << "Dessert added to menu!" << endl;
+				cout << "Is the dessert contains nuts? (1 for yes, 0 for no): ";
+				cin >> containsNuts;
+				restaurantMenu.push_back(make_shared<Dessert>("Dessert", name, price, calories, containsNuts));
+
+				ofstream outFile("menu.txt", ios::app);
+				if (outFile.is_open()) {
+					outFile << "Dessert: " << name << ", Price: " << price << ", Calories: " << calories << "kcal, Contains nuts?: " << containsNuts << endl;
+					outFile.close();
+					cout << "Dessert saved to menu.txt!" << endl;
+				}
 				break;
 			}
 

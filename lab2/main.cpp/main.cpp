@@ -185,10 +185,126 @@ void userMenu(bool& isAppRunning) {
 		}
 		case 3: {
 			cout << "--- Create new order ---" << endl;
+			if (customers.empty()) {
+				cout << "No customers registered! Please sign up first." << endl;
+				break;
+			}
+
+			if (restaurantMenu.empty()) {
+				cout << "Menu is empty! Please wait for admin to add dishes." << endl;
+				break;
+			}
+
+			cout << "Select yout profile:" << endl;
+			for (size_t i = 0; i < customers.size(); i++) {
+				cout << i + 1 << ". ";
+				customers[i]->display();
+			}
+
+			int customerChoice;
+			cout << "Your choice: ";
+			cin >> customerChoice;
+			if (customerChoice < 1 || customerChoice > customers.size()) {
+				cout << "Invalid choice. Returning to user menu." << endl;
+				break;
+			}
+
+			vector<shared_ptr<MenuDish>> cart;
+			int dishChoice = -1;
+			cout << "\nAdd dishes to yout cart" << endl;
+			while (dishChoice != 0) {
+				for (size_t i = 0; i < restaurantMenu.size(); ++i) {
+					cout << i + 1 << ". ";
+					restaurantMenu[i]->display();
+				}
+				cout << "0. Finish adding to cart" << endl;
+				cout << "Select dish to add: ";
+				cin >> dishChoice;
+
+				if (dishChoice > 0 && dishChoice <= restaurantMenu.size()) {
+					cart.push_back(restaurantMenu[dishChoice - 1]);
+					cout << "[+] Dish added to cart!\n" << endl;
+				}
+				else if (dishChoice != 0) {
+					cout << "[-] Invalid choice!\n" << endl;
+				}
+			}
+
+			if (cart.empty()) {
+				cout << "Your cart is empty. Order cancelled." << endl;
+				break;
+			}
+
+			double totalPrice;
+			cout << "\nYour cart has " << cart.size() << " items." << endl;
+			cout << "Enter total price to pay (UAH): ";
+			cin >> totalPrice;
+
+			int orderType;
+			cout << "Select order type:\n1. Dine-in\n2. Online delivery\nYour choice: ";
+			cin >> orderType;
+			string typeName;
+
+
+			if (orderType == 1) {
+				int table;
+				double tip;
+				cout << "Enter table number: "; cin >> table;
+				cout << "Enter tip amount: "; cin >> tip;
+
+				Order* newOrder = new DineInOrder(1, totalPrice, false, *customers[customerChoice - 1], table, tip);
+				cout << "\n[System] Processing Dine-in order..." << endl;
+				newOrder->processOrder();
+				newOrder->display();
+				delete newOrder;
+				typeName = "Dine-in";
+			}
+			else if (orderType == 2) {
+				string address;
+				double fee;
+				cout << "Enter delivery address (no_spaces): "; cin >> address;
+				cout << "Enter delivery fee: "; cin >> fee;
+
+				Order* newOrder = new OnlineOrder(2, totalPrice, false, *customers[customerChoice - 1], address, fee);
+				cout << "\n[System] Processing Online order..." << endl;
+				newOrder->processOrder();
+				newOrder->display();
+				delete newOrder;
+				typeName = "Online";
+			}
+			else {
+				cout << "[Error] Invalid order type." << endl;
+			}
+
+			if (orderType == 1 || orderType == 2) {
+				ofstream historyFile("orders.txt", ios::app);
+				if (historyFile.is_open()) {
+					historyFile << "ORDER | Customer Profile ID: " << customerChoice
+						<< " | Items count: " << cart.size()
+						<< " | Total: " << totalPrice << " UAH | Delivery: " << typeName << "\n";
+					historyFile.close();
+					cout << "[System] Receipt successfully saved to history.txt!" << endl;
+				}
+				else {
+					cout << "[Error] Could not save history file." << endl;
+				}
+			}
 			break;
 		}
+
 		case 4: {
 			cout << "--- All information ---" << endl;
+			cout << "~~~ REGISTERED CUSTOMERS (" << customers.size() << ") ~~~" << endl;
+			if (customers.empty()) cout << "No customers yet." << endl;
+			for (size_t i = 0; i < customers.size(); i++) {
+				customers[i]->display();
+			}
+
+			cout << "\n~~~ RESTAURANT MENU (" << restaurantMenu.size() << ") ~~~" << endl;
+			if (restaurantMenu.empty()) cout << "Menu is empty." << endl;
+			for (size_t i = 0; i < restaurantMenu.size(); i++) {
+				restaurantMenu[i]->display();
+			}
 			break;
 		}
 		case 5: {

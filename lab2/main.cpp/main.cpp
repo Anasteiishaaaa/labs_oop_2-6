@@ -26,9 +26,10 @@ void adminMenu(bool& isAppRunning) {
 		cout << "------- ADMIN MENU -------" << endl;
 		cout << "1. Add new dish to menu" << endl;
 		cout << "2. Add new drink to menu" << endl;
-		cout << "3. View all menu" << endl;
-		cout << "4. View customers" << endl;
-		cout << "5. Log out of account" << endl;
+		cout << "3. Add new dessert to menu" << endl;
+		cout << "4. View all menu" << endl;
+		cout << "5. View customers" << endl;
+		cout << "6. Log out of account" << endl;
 		cout << "0. Turn off the system" << endl;
 		cout << "--------------------------" << endl;
 		cout << "Your choice : " << endl;
@@ -72,6 +73,24 @@ void adminMenu(bool& isAppRunning) {
 			}
 
 			case 3: {
+				string name;
+				double price;
+				int calories;
+				bool isSweet;
+				cout << "Enter dessert name: ";
+				cin >> name;
+				cout << "Enter dessert price: ";
+				cin >> price;
+				cout << "Enter dessert calories: ";
+				cin >> calories;
+				cout << "Is the dessert sweet? (1 for yes, 0 for no): ";
+				cin >> isSweet;
+				restaurantMenu.push_back(make_shared<Dessert>("Dessert", name, price, calories, isSweet));
+				cout << "Dessert added to menu!" << endl;
+				break;
+			}
+
+			case 4: {
 				cout << "--- Our menu ---" << endl;
 				if (restaurantMenu.empty()) cout << "Menu is empty!" << endl;
 				for (size_t i = 0; i < restaurantMenu.size(); i++) {
@@ -81,7 +100,7 @@ void adminMenu(bool& isAppRunning) {
 				break;
 				}
 
-			case 4: {
+			case 5: {
 				cout << "--- Customers ---" << endl;
 				if (customers.empty()) cout << "No customers registered!" << endl;
 				for (size_t i = 0; i < customers.size(); i++) {
@@ -90,7 +109,7 @@ void adminMenu(bool& isAppRunning) {
 				break;
 				}
 
-			case 5: {
+			case 6: {
 				cout << "Returning to main menu..." << endl;
 				isAdminRunning = false;
 			}
